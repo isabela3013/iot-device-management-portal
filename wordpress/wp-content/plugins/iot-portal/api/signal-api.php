@@ -3,13 +3,11 @@
 add_action('rest_api_init', 'iot_register_api_routes');
 
 function iot_register_api_routes() {
-
     register_rest_route('iot/v1', '/signal', array(
         'methods'  => 'POST',
         'callback' => 'iot_receive_signal',
         'permission_callback' => '__return_true'
     ));
-
 }
 
 function iot_receive_signal($request) {
@@ -63,12 +61,10 @@ function iot_receive_signal($request) {
 
 
     if (!$device) {
-
         return array(
             'status' => 'error',
             'message' => 'Invalid API key'
         );
-
     }
 
 
@@ -79,12 +75,10 @@ function iot_receive_signal($request) {
     $data = $request->get_json_params();
 
     if (!isset($data['temperature'])) {
-
         return array(
             'status' => 'error',
             'message' => 'temperature required'
         );
-
     }
 
 
@@ -93,11 +87,9 @@ function iot_receive_signal($request) {
     */
 
     $wpdb->insert($signals_table, array(
-
         'device_id' => $device->id,
         'temperature' => floatval($data['temperature']),
         'created_at' => current_time('mysql')
-
     ));
 
     $wpdb->update($devices_table,
