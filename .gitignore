@@ -1,0 +1,24 @@
+# Environment
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker
+mysql-data/
+
+# WordPress uploads (optional)
+wordpress/wp-content/uploads/
+
+# Node modules (if ever used)
+node_modules/
+
+# VSCode
+.vscode/
+
+# Windows
+desktop.ini
