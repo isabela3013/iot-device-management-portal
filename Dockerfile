@@ -1,18 +1,14 @@
 FROM wordpress:php8.2-apache
 
-# Fix Apache MPM conflict (THIS is the real fix)
-RUN a2dismod mpm_event || true
-RUN a2dismod mpm_worker || true
-RUN a2enmod mpm_prefork
+# Fix Apache conflict
+RUN a2dismod mpm_event || true \
+ && a2dismod mpm_worker || true \
+ && a2enmod mpm_prefork \
+ && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Copy WordPress files
-COPY wordpress/ /var/www/html/
-
-# Permissions
-RUN chown -R www-data:www-data /var/www/html
-
-# Apache config fix
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# Copy only plugin
+COPY wordpress/wp-content/plugins/iot-portal \
+/var/www/html/wp-content/plugins/iot-portal
 
 EXPOSE 80
 
